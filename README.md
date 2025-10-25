@@ -57,4 +57,6 @@ All endpoints return a JSON object with:
 - Maven
 - MySQL (or compatible database)
 
-
+## Branches
+- **main**: Contains XML-based Spring configuration (applicationContext.xml, dispatcher-servlet.xml).
+- **java-config**: Contains Java-based Spring configuration (AppConfig.java, WebConfig.java).
