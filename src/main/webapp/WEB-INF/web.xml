@@ -7,29 +7,30 @@
 
     <display-name>Tricol API Application</display-name>
 
-    <!-- Root Application Context (Business Logic Layer) -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
+        <param-value>com.tricol.config.AppConfig</param-value>
     </context-param>
 
-    <!-- Bootstrap the Root Application Context -->
-    <!-- Creates the root application context on startup.
-        Before any servlets load.
-        Contains: Services, repositories, database configuration. -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- Spring MVC DispatcherServlet (Web Layer) -->
-    <!-- Registers Spring's DispatcherServlet. contextConfigLocation: Where to find web layer configuration. -->
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+            <param-value>com.tricol.config.WebConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
