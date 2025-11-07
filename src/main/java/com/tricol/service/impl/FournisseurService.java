@@ -1,7 +1,8 @@
-package com.tricol.service;
+package com.tricol.service.impl;
 
 import com.tricol.entity.Fournisseur;
 import com.tricol.repository.FournisseurRepository;
+import com.tricol.service.FournisseurServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -9,15 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class FournisseurService {
-    @Autowired
+public class FournisseurService implements FournisseurServiceInterface {
     private FournisseurRepository fournisseurRepository;
 
+    public void setRepository(FournisseurRepository repository) {
+        this.fournisseurRepository = repository;
+    }
+
+    @Override
     public Fournisseur saveFournisseur(Fournisseur fournisseur) {
         return fournisseurRepository.save(fournisseur);
     }
 
+    @Override
     public Fournisseur updateFournisseur(Long id, Fournisseur fournisseur) {
         Optional<Fournisseur> optional = fournisseurRepository.findById(id);
         if (optional.isPresent()) {
@@ -35,6 +40,7 @@ public class FournisseurService {
         }
     }
 
+    @Override
     public void deleteFournisseur(Long id) {
         if (fournisseurRepository.findById(id).isPresent()) {
             fournisseurRepository.deleteById(id);
@@ -43,10 +49,17 @@ public class FournisseurService {
         }
     }
 
+    @Override
     public List<Fournisseur> findAllFournisseurs() {
         return fournisseurRepository.findAll();
     }
 
+    @Override
+    public Optional<Fournisseur> findFournisseurById(Long id){
+        return fournisseurRepository.findById(id);
+    }
+
+    @Override
     public List<Fournisseur> sortFournisseursBySociety(){
          return fournisseurRepository.findAll(Sort.by(Sort.Direction.ASC, "societe"));
     }

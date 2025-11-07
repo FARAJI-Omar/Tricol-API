@@ -10,7 +10,7 @@
     <!-- Root Application Context (Business Logic Layer) -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <!-- Bootstrap the Root Application Context -->

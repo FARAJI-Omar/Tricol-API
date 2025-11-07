@@ -14,14 +14,17 @@
            http://www.springframework.org/schema/data/jpa
            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!-- Enable component scanning for services and repositories -->
-    <context:component-scan base-package="com.tricol.service"/>
+    <!-- Enable component scanning for repositories -->
     <context:component-scan base-package="com.tricol.repository"/>
 
     <!-- Enable Spring Data JPA repositories, Automatically implements your UserRepository interface. -->
     <jpa:repositories base-package="com.tricol.repository"/>
+    <!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
-    <!-- Database properties (you can externalize to properties file) -->
+    <!-- Database properties -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tricol?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
         <property name="username" value="root"/>
@@ -58,9 +61,16 @@
         </property>
     </bean>
 
-    <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <!-- Enable Transaction Management -->
+    <tx:annotation-driven/>
+
+    <!-- Enable @PersistenceContext annotation -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <!-- FournisseurService Bean -->
+    <bean id="fournisseurService" class="com.tricol.service.impl.FournisseurService">
+        <property name="repository" ref="fournisseurRepository"/>
     </bean>
+
 
 </beans>
